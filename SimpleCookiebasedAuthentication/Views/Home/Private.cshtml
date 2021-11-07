@@ -1,7 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Private area";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>This page has private information.
-    <br/>...you must be logged in, since you're here :).</p>
+<div class="text-center">
+    <h1>@ViewData["Title"]</h1>
+    <h4>Autenticated users only </h4>
+
+    <img src="/images/authenticated_user.png" style="float:right;width:100px;" />
+    <p>
+        This page has private information and is only accessible to authenticated users.
+    </p>
+</div>

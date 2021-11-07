@@ -17,7 +17,7 @@ namespace SimpleCookiebasedAuthentication.Controllers
 
         //receives the login form on submit
         [HttpPost]
-        public async Task<IActionResult> Login([FromForm] LoginModel loginInfo) 
+        public async Task<IActionResult> Login([FromForm] LoginModel loginInfo, [FromQuery] string returnUrl) 
         {
 
             if (loginInfo.UserName == "Bob" && loginInfo.Password == "1234")
@@ -28,7 +28,7 @@ namespace SimpleCookiebasedAuthentication.Controllers
                     new Claim(ClaimTypes.Role, "Registered_user"),
                 };
 
-                 return await SignInUsingClaims(claims);
+                 await SignInUsingClaims(claims);
             }
             else if (loginInfo.UserName == "Admin" && loginInfo.Password == "1234")
             {
@@ -38,14 +38,18 @@ namespace SimpleCookiebasedAuthentication.Controllers
                     new Claim(ClaimTypes.Role, "Administrator"),
                 };
 
-                 return await SignInUsingClaims(claims);
+                  await SignInUsingClaims(claims);
             }
-           
-                return View();
+
+            if (string.IsNullOrEmpty(returnUrl))
+            {
+                return RedirectToAction();
+            }
+            return View();
         }
 
         //creates the authentication cookie with claims
-        private async Task<ActionResult> SignInUsingClaims(List<Claim> claims)
+        private async Task SignInUsingClaims(List<Claim> claims)
         {
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -81,7 +85,6 @@ namespace SimpleCookiebasedAuthentication.Controllers
                 authProperties);
 
             TempData["Message"] = $"You are logged in as {claimsIdentity.Name}";
-            return RedirectToAction("Index", "");
         }
 
         //deletes the authentication cooke

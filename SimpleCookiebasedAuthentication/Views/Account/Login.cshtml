@@ -1,9 +1,10 @@
 ﻿@model SimpleCookiebasedAuthentication.Models.LoginModel
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-<h4>Please log in</h4>
-@{
+
+
+@if (!Context.User.Identity.IsAuthenticated)
+{
+    <h4>Please log in</h4>
+
     using (@Html.BeginForm())
     {
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
@@ -16,7 +17,7 @@
         <br />
         @Html.LabelFor(m => m.Password);
         <br />
-        @Html.PasswordFor(m => m.Password);
+        @Html.EditorFor(m => m.Password);
         <br />
         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
         <br />
@@ -24,11 +25,12 @@
         <br />
     }
     <br />
-<p>Use the username 'Bob' and the password '1234' to authenticate.</p>
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <p>Use the username 'Bob' or 'Admin' and the password '1234' to authenticate.</p>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 }
-}
+
 <div class="container" style="margin:10px;border:1px solid black;background-color:#eeffff;">
     <p>
         <b>Explanation</b>
@@ -36,17 +38,17 @@
         <br />The validation comes from the attributes on the LoginModel.
         <br />Both properties require a non-null value and the regular expression attribute enforces a 'no spaces' rule.
     <p>
-        <code>
+        <pre style="white-space:pre">
             public class LoginModel
-            <br />{
-            <br />[Required]
-            <br />[RegularExpression(@@"[^\s]+", ErrorMessage ="No spaces in username")]
-            <br />public string UserName { get; set; }
-            <br />
-            <br />[Required]
-            <br />[RegularExpression(@@"[^\s]+", ErrorMessage = "No spaces in password")]
-            <br />public string Password { get; set; }
-            <br />}
-        </code>
+        <br />{
+        <br />  [Required]
+        <br />  [RegularExpression(@@"[^\s]+", ErrorMessage ="No spaces in username")]
+        <br />  public string UserName { get; set; }
+        <br />
+        <br />  [Required]
+        <br />  [RegularExpression(@@"[^\s]+", ErrorMessage = "No spaces in password")]
+        <br />  public string Password { get; set; }
+        <br />}
+        </pre>
     </p>
 </div>
