@@ -10,29 +10,30 @@
     <p></p>
         <p>Learn about <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-6.0">ensuring authorized access using cookies in ASP.NET Core MVC</a>.</p>
 </div>
-<p></p>
 <div class="container" style="margin:10px;border:1px solid black;background-color:#eeffff;">
-    <p>
-        <b>Explanation</b>
-        <br />The entire HomeController requires authorization, as it has the [Authorize] attribute on the controller.
-        <br />The actions 'Index()' and 'Error()' have the [AllowAnonymous] attribute, to allow the front page and errors to be seen by unauthorized users.
-        <br />The action ''AdminOnly()' has the added requirement that the authentication model must have a role claim with the value 'Administrator'. Bob is only 'Registered_user', so he can't get access.
-<p>
-    <code>
-        [Authorize]
-        <br />public class HomeController
-        <br />{
-        <br />  [AllowAnonymous]
-        <br />  public IActionResult Index() {...}  //free access
-        <br />
-        <br />  [AllowAnonymous]
-        <br />  public IActionResult Error() {...}  //free access
-        <br />
-        <br />  public IActionResult Private() {...}  //for authenticated users only
-        <br />
-        <br />  [Authorize(Roles = "Administrator")]  //for authenticated admins only
-        <br />  public IActionResult AdminsOnly() {...}
-        <br />}
-    </code>
-    </p>
+    <div class="row">
+        <p>
+            <b>Explanation</b>
+            <br />The entire HomeController requires authorization, as it has the [Authorize] attribute on the controller.
+            <br />The actions 'Index()' and 'Error()' have the [AllowAnonymous] attribute, to allow the front page and errors to be seen by unauthorized users.
+            <br />The action ''AdminOnly()' has the added requirement that the authentication model must have a role claim with the value 'Administrator'. Bob is only 'Registered_user', so he can't get access.
+        <p>
+            <code>
+                [Authorize]
+                <br />public class HomeController
+                <br />{
+                <br />  [AllowAnonymous]
+                <br />  public IActionResult Index() {...}  //free access
+                <br />
+                <br />  [AllowAnonymous]
+                <br />  public IActionResult Error() {...}  //free access
+                <br />
+                <br />  public IActionResult Private() {...}  //for authenticated users only
+                <br />
+                <br />  [Authorize(Roles = "Administrator")]  //for authenticated admins only
+                <br />  public IActionResult AdminsOnly() {...}
+                <br />}
+            </code>
+        </p>
+    </div>
 </div>

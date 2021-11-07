@@ -15,7 +15,6 @@ namespace SimpleCookiebasedAuthentication.Controllers
         [HttpGet]
         public IActionResult Login() => View(); 
 
-
         //receives the login form on submit
         [HttpPost]
         public async Task<IActionResult> Login([FromForm] LoginModel loginInfo) 
@@ -29,7 +28,7 @@ namespace SimpleCookiebasedAuthentication.Controllers
                     new Claim(ClaimTypes.Role, "Registered_user"),
                 };
 
-                await SignInUsingClaims(claims);
+                 return await SignInUsingClaims(claims);
             }
             else if (loginInfo.UserName == "Admin" && loginInfo.Password == "1234")
             {
@@ -39,19 +38,21 @@ namespace SimpleCookiebasedAuthentication.Controllers
                     new Claim(ClaimTypes.Role, "Administrator"),
                 };
 
-                await SignInUsingClaims(claims);
+                 return await SignInUsingClaims(claims);
             }
-            return View();
+           
+                return View();
         }
 
-        private async Task SignInUsingClaims(List<Claim> claims)
+        //creates the authentication cookie with claims
+        private async Task<ActionResult> SignInUsingClaims(List<Claim> claims)
         {
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var authProperties = new AuthenticationProperties
             {
-                #region options
+                #region often used options - to consider including in cookie
                 //AllowRefresh = <bool>,
                 // Refreshing the authentication session should be allowed.
 
@@ -78,14 +79,20 @@ namespace SimpleCookiebasedAuthentication.Controllers
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity),
                 authProperties);
+
+            TempData["Message"] = $"You are logged in as {claimsIdentity.Name}";
+            return RedirectToAction("Index", "");
         }
 
+        //deletes the authentication cooke
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return View();
+            TempData["Message"] = "You are now logged out.";
+            return RedirectToAction("Index", "");
         }
 
+        //displayed if an area is off-limits, based on an authenticated user's claims
         public  IActionResult AccessDenied()
         {
             return View();
