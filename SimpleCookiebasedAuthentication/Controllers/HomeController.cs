@@ -5,6 +5,14 @@ using System.Diagnostics;
 
 namespace SimpleCookiebasedAuthentication.Controllers
 {
+
+    //Cookie based authentication on MSDN:
+    // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-6.0
+
+    //Good article about cookie based authentication
+    //https://www.c-sharpcorner.com/article/authentication-and-authorization-in-asp-net-core-mvc-using-cookie/
+
+
     [Authorize]
     public class HomeController : Controller
     {

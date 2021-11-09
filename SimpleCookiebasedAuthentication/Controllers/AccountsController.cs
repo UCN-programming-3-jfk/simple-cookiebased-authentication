@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SimpleCookiebasedAuthentication.Controllers
 {
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
 
         //shows the login form

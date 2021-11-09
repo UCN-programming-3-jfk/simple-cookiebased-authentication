@@ -14,8 +14,7 @@ namespace SimpleCookiebasedAuthentication
 {
     public class Startup
     {
-        //Cookie based authentication on MSDN:
-        // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-6.0
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,8 +25,18 @@ namespace SimpleCookiebasedAuthentication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Setup authentication to use cookies
+            //change the login, logout and access denied URLS,
+            //since we like to have our Controller names plural :)
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie();
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+            options =>
+            {
+                options.LoginPath = "/Accounts/Login";
+                options.AccessDeniedPath = "/Accounts/AccessDenied";
+                options.LogoutPath = "/Accounts/LogOut";
+            });
             services.AddControllersWithViews();
         }
 
@@ -49,8 +58,6 @@ namespace SimpleCookiebasedAuthentication
 
             app.UseRouting();
 
-
-            //app.UseCookiePolicy(cookiePolicyOptions);
             app.UseAuthentication();    //added for authentication
             app.UseAuthorization();
 
