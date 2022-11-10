@@ -4,10 +4,12 @@
 
 <h1>Access denied</h1>
 <hr />
-<div class="row" style="background-color:salmon">
+<div class="row bg-danger text-light">
     <div class="col-md-12">
-        You are not authorized to be here.
-        <br />If you want access, you need to log in with the correct credentials to be authorized.
+        You are seeing this page, because you are logged in as an authenticated user, but you don't have the correct credentials (role) to be on this specific page.'
+        <br />In other words: you are authorized, but not authorized to be HERE 😊.
+        <br />If you want access, you need to log in with the correct credentials for this area.
+
     </div>
 </div>
 
@@ -16,5 +18,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

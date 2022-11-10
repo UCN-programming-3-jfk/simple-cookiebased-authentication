@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -34,27 +35,33 @@
                             }
                             else
                             {
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogIn">Log in</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Accounts" asp-action="LogIn">Log in</a>
                             }
                         </li>
                     </ul>
                 </div>
             </div>
+        @if (Context.User.Identity.IsAuthenticated)
+        {
+            <span>Logged in as 
+                @Context.User.Claims.FirstOrDefault((claim)=> claim.Type == ClaimTypes.Email)?.Value
+                (id:@Context.User.Claims.FirstOrDefault((claim)=> claim.Type == "id")?.Value)</span>
+        }
         </nav>
     </header>
     
     <div class="container">
         <main role="main" class="pb-3">
-            <p style="background-color:#ffeeaa;margin:0px auto;">@TempData["Message"]</p>
+            <div class="text-center bg-primary text-light">@TempData["Message"]</div>
             @RenderBody()
         </main>
     </div>
 
-    @*<footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2021 - SimpleCookiebasedAuthentication - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer bg-light">
+            <div class="container text-center">
+                SimpleCookiebasedAuthentication - <a href="https://github.com/UCN-programming-3-jfk/simple-cookiebased-authentication">Source code on GitHub</a>
             </div>
-        </footer>*@
+        </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
