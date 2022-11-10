@@ -16,21 +16,21 @@
             <b>Explanation</b>
             <br />The entire HomeController requires authorization, as it has the [Authorize] attribute on the controller.
             <br />The actions 'Index()' and 'Error()' have the [AllowAnonymous] attribute, to allow the front page and errors to be seen by unauthorized users.
-            <br />The action ''AdminsOnly()' has the added requirement that the authentication model must have a role claim with the value 'Administrator'. Bob is only 'Registered_user', so he can't get access.
+            <br />The action ''AdminsOnly()' has the added requirement that the authentication model must have a role claim with the value 'Administrator'. Bob is only 'User', so he can't get access.
         <p>
             <pre style="font-family:monospace;color:navy;font-weight:bold">
     [Authorize]
     public class HomeController
     {
-        [AllowAnonymous]
-        public IActionResult Index() {...}  //free access
+        [AllowAnonymous]                    
+        public IActionResult Index() {...}      //open to unauthenticated users
     
-        [AllowAnonymous]
-        public IActionResult Error() {...}  //free access
+        [AllowAnonymous]                    
+        public IActionResult Error() {...}      //open to unauthenticated users
     
-        public IActionResult Private() {...}  //for authenticated users only
+        public IActionResult Private() {...}    //for authenticated users only
     
-        [Authorize(Roles = "Administrator")]  //for authenticated admins only
+        [Authorize(Roles = "Administrator")]    //for authenticated admins only
         public IActionResult AdminsOnly() {...}
     }
 </pre>
