@@ -38,17 +38,17 @@
         <br />The validation comes from the attributes on the LoginModel.
         <br />Both properties require a non-null value and the regular expression attribute enforces a 'no spaces' rule.
     <p>
-        <pre style="white-space:pre">
-            public class LoginModel
-        <br />{
-        <br />  [Required]
-        <br />  [RegularExpression(@@"[^\s]+", ErrorMessage ="No spaces in username")]
-        <br />  public string UserName { get; set; }
-        <br />
-        <br />  [Required]
-        <br />  [RegularExpression(@@"[^\s]+", ErrorMessage = "No spaces in password")]
-        <br />  public string Password { get; set; }
-        <br />}
-        </pre>
+<pre style="font-family:monospace;color:navy;font-weight:bold">
+public class LoginModel
+{
+    [Required]
+    [RegularExpression(@@"[^\s]+", ErrorMessage ="No spaces in username")]
+    public string UserName { get; set; }
+        
+    [Required]
+    [RegularExpression(@@"[^\s]+", ErrorMessage = "No spaces in password")]
+    public string Password { get; set; }
+}
+</pre>
     </p>
 </div>
